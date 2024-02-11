@@ -1,0 +1,19 @@
+<form (ngSubmit)="submit()" [formGroup]="dialogForm">
+    <mat-dialog-content fxLayout="column">
+        <mat-form-field>
+            <mat-label>Hash</mat-label>
+            <input name="hash" formControlName="hash" matInput placeholder="Hash">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Hash Type</mat-label>
+            <mat-select formControlName="hashType">
+                <mat-option *ngFor="let hashType of hashTypes" [value]="hashType">
+                    {{ hashType }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+        <button [disabled]="dialogForm.invalid" type="submit" mat-button mat-dialog-close tabindex="-1">Submit</button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,28 @@
+<mat-paginator (page)="handlePageEvent($event)" [length]="length | async" [pageSize]="pageSize"
+    showFirstLastButtons="true" [pageIndex]="pageIndex" aria-label="Select page">
+</mat-paginator>
+<mat-action-list role="list">
+    <mat-list-item role="listitem" *ngFor="let challenge of challenges | async | keyvalue">
+        <span matLine fxLayout="row" fxLayoutAlign="start center">
+            <span [textContent]="'Reward: ' + convertToNear(challenge.value.amount)"></span>
+            <mat-icon class="near-icon" svgIcon="near"></mat-icon>
+        </span>
+        <span matLine [textContent]="'Type: ' + challenge.value.hash_type">
+        </span>
+        <span matLine [textContent]="'Hash: ' + challenge.value.hash"></span>
+        <span *ngIf="challenge.value.solution" matLine [textContent]="'Solution: ' + challenge.value.solution"></span>
+        <span *ngIf="challenge.value.cracked_by" matLine [textContent]="'Cracked by: ' + challenge.value.cracked_by"></span>
+        <button mat-icon-button fxFlexAlign="center end" (click)="hashassine.removeChallenge(toInt(challenge.key))"
+            matTooltip="Delete Hash">
+            <mat-icon svgIcon="delete-forever"></mat-icon>
+        </button>
+        <button (click)="openRewardPopup(toInt(challenge.key), challenge.value.amount)" mat-icon-button
+            fxFlexAlign="center end" matTooltip="Deposit / Withdraw Reward">
+            <mat-icon svgIcon="cash-multiple"></mat-icon>
+        </button>
+        <button mat-icon-button fxFlexAlign="center end" (click)="copyToClipboard(challenge.value.hash, $event)"
+            matTooltip="Copy Hash to Clipboard">
+            <mat-icon svgIcon="content-copy"></mat-icon>
+        </button>
+    </mat-list-item>
+</mat-action-list>
